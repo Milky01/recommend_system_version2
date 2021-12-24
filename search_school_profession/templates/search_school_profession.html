@@ -1,0 +1,76 @@
+{# 继承 base.html #}
+{% extends "base.html" %}
+
+{# 替换title #}
+{% block title %}
+{{ title }}
+{% endblock %}
+
+
+{# 替换内容 #}
+{% block content %}
+<div class="container">
+<div id="select_school">
+    <form class="form-inline" action="" method="post" novalidate>
+        {% csrf_token %}
+        {% for foo in school_form %}
+            <div class="form-group">
+                <label for="exampleInputEmail1">{{ foo.label }}</label>
+                {{ foo }}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">搜索</button>
+    </form>
+</div>
+<table class="table table-bordered table-hover table-striped ">
+    <tr style="background-color:#337ab7; color:aliceblue">
+        <th>院校名称</th>
+        <th>专业名称</th>
+        <th>院校排名</th>
+        <th>省份</th>
+        <th>城市</th>
+        <th>985</th>
+        <th>211</th>
+        <th>公办</th>
+        <th>考生类别</th>
+        <th>录取批次</th>
+        <th>专业最低分</th>
+        <th>专业最低排位</th>
+    </tr>
+    <hr/>
+    {% for school in schools %}
+    <tr class="tr_school">
+        <td><a href="/school_info/{{ school.school_name }}">{{ school.school_name }}</a></td>
+        <td>{{ school.profession_name }}</td>
+        <td>{{ school.school_rank }}</td>
+        <td>{{ school.school_province }}</td>
+        <td>{{ school.school_city }}</td>
+        <td>{{ school.type_985 }}</td>
+        <td>{{ school.type_211 }}</td>
+        <td>{{ school.type_self }}</td>
+        <td>{{ school.student_type }}</td>
+        <td>{{ school.epoch }}</td>
+        <td>{{ school.lowest_score }}</td>
+        <td>{{ school.lowest_rank }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{# 分页标签的HTML代码 #}
+<div class="pagination">
+    <span class="step-links">
+        {% if schools.has_previous %}
+        <a href="?page={{ schools.previous_page_number }}&&{{rank}}">上一页</a>
+        {% endif %}
+
+        <span class="current">
+            第 {{ schools.number }} of {{ schools.paginator.num_pages }} 页.
+        </span>
+
+        {% if schools.has_next %}
+        <a href="?page={{ schools.next_page_number }}&&rank={{rank}}">下一页</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+    <div class="col-md-offset-2">推荐的学校分数与您相差较大？前往<a href="../student_info/"> 个人信息 </a>修改您的高考分数</div>
+{% endblock %}

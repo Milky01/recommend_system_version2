@@ -22,7 +22,7 @@ def school_list(request):
                                                     epoch__contains=request.session['epoch'],
                                                     school_province__contains=request.session['province'])
     title = '普通院校信息'
-    paginator = Paginator(school_list, 10)  # 设置每一页显示几条  创建一个panginator对象
+    paginator = Paginator(school_list, 25)  # 设置每一页显示几条  创建一个panginator对象
     last = paginator.num_pages
     try:
         current_num = int(request.GET.get('page', 1))  # 当你在url内输入的?page = 页码数  显示你输入的页面数目 默认为第2页
@@ -63,9 +63,15 @@ def one_school(request, school_name):
             profession_name = x['profession_name']
 
     title = school_name
-    science_message = models.One_School.objects.filter(profession_name__contains=profession_name, school_name=school_name, student_type='理科')
-    art_message = models.One_School.objects.filter(profession_name__contains=profession_name, school_name=school_name, student_type='文科')
+    science_message = models.One_School.objects.filter(profession_name__contains=profession_name, school_name=school_name, student_type='物理类')
+    art_message = models.One_School.objects.filter(profession_name__contains=profession_name, school_name=school_name, student_type='历史类')
     one_school_form = forms.one_school_form()
+    if len(art_message)>0:
+        school_site = art_message[0].school_site
+    else:
+        d = models.School_info.objects.filter(school_name=school_name)
+        school_site = d[0].school_site
+    
     province = models.School_info.objects.filter(school_name=school_name)[0].school_province
     if province != '广东':
         province = '全国'

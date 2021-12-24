@@ -1,0 +1,41 @@
+{# 继承 base.html #}
+{% extends "base.html" %}
+
+{# 替换title #}
+{% block title %}
+{{ title }}
+{% endblock %}
+
+
+{# 替换内容 #}
+{% block content %}
+     <div class="container">
+        <div class="col-md-6 col-md-offset-3" style="border: solid 1px #D4D4D4;border-radius: 25px;margin-top: 120px;padding: 20px;box-shadow: 0px 0px 10px black;">
+        {% if is_timeover == True %}
+            该链接已经过期
+        
+        {% else %}
+            <form class='form-register' action="" method="post">
+              {% if error %}
+                  <div class="alert alert-warning">{{ error }}</div>
+              {% endif %}
+
+              <h2 class="text-center">重置密码</h2>
+                {% for item in change_form %}
+                    <div class="form-group">
+                        {{ item.label_tag }}
+                        {{ item }}
+                    </div>
+                {% endfor %}
+              <button type="reset" class="btn btn-default pull-left">重置</button>
+              
+              <button type="submit" class="btn btn-primary pull-right">提交</button>
+          </form>
+          {% endif %}
+        </div>
+    </div>
+
+    <script>
+        
+    </script>
+{% endblock %}

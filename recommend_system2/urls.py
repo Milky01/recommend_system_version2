@@ -21,6 +21,7 @@ urlpatterns = [
     path('', include('Test.urls')),
     path('', include('school_info.urls')),
     path('', include('recommend_school.urls')),
+    path('', include('search_school_profession.urls')),
     path('', include('recommend_profession.urls')),
     path('admin/', admin.site.urls),
 ]

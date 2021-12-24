@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,re_path
 from . import views
 from templates import *
 
@@ -8,4 +8,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('logout/', views.logout, name='logout'),
     path('student_info/', views.student_info, name='student_info'),
+    path('forget/',views.forget,name='forget'),
+    re_path(r'^change/(.+)/$',views.change,name='change')
 ]
